@@ -1,41 +1,48 @@
-MainMenu = { name = "main", selected = 0, labels = { [0] = "start", "settings", "exit" } }
+MainMenu = { name = "main", selected = 0, labels = { [0] = "start", "exit" } }
 
-function drawMenu()
+function MainMenu:drawMenu()
     posx = 25
-    posy = 25
-    for i = 0, count(MainMenu.labels), 1 do
-        print(MainMenu.labels[i], posx, posy + i * 10)
-        if i == MainMenu.selected then
+    posy = 65
+    for i = 0, count(self.labels), 1 do
+        print(self.labels[i], posx, posy + i * 10)
+        if i == self.selected then
             print(">", posx - 5, posy + i * 10)
         end
     end
-
+    sprx = 16
+    spry = 0
+    spr(128, sprx, spry, 4, 4)
+    spr(132, sprx + 32, spry, 4, 4)
+    print("boardmaster", sprx, spry + 34)
     print("X - to enter", 64, 120)
 end
 
 function MainMenu:init()
-    MainMenu.selected = 0
+    self.selected = 0
 end
 
 function MainMenu:draw()
-    drawMenu()
-    -- Mouse.draw()
+    self:drawMenu()
+    Mouse:draw()
 end
 
 function MainMenu:update()
-    -- Mouse.updatePos()
-    -- LMB
-    if Mouse.btn == 1 then
-        circfill(Mouse.posX, Mouse.posY, 5, t())
+    Mouse:updatePos()
+    if btnp() != 0 then
+        printh(btnp())
     end
-    if btnp(2) and MainMenu.selected > 0 then
-        MainMenu.selected = MainMenu.selected - 1
-    elseif btnp(3) and MainMenu.selected < count(MainMenu.labels) then
-        MainMenu.selected = MainMenu.selected + 1
+    -- LMB
+    if btnp(2) and self.selected > 0 then
+        self.selected = self.selected - 1
+    elseif btnp(3) and self.selected < count(self.labels) then
+        self.selected = self.selected + 1
     end
     if btnp(5) then
-        if MainMenu.selected == 0 then
+        -- Todo settings
+        if self.selected == 0 then
             changeLevel("board")
+        else
+            stop()
         end
     end
 end

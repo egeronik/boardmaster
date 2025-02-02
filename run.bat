@@ -1,0 +1,1 @@
+C:\Windows\System32\cmd.exe /c "D:\PICO-8\pico8.exe"
